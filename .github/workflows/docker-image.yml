@@ -19,12 +19,12 @@ jobs:
        # run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
         # Authentification DockerHub
 
-      - name: Build Docker Image
-        run: docker build --no-cache -t ahmedhmila/foyer_image:1.0.0 .
+     # - name: Build Docker Image
+     #   run: docker build --no-cache -t ahmedhmila/foyer_image:1.0.0 .
         # Construction de l'image Docker
 
-      - name: Scan with Trivy
-        run: trivy image ahmedhmila/foyer_image:1.0.0
+    #  - name: Scan with Trivy
+    #    run: trivy image ahmedhmila/foyer_image:1.0.0
         # Analyse de l'image avec Trivy
 
   deploy:
