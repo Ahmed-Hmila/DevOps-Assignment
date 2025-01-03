@@ -25,7 +25,7 @@ jobs:
 
     #  - name: Scan with Trivy
     #    run: trivy image ahmedhmila/foyer_image:1.0.0
-        # Analyse de l'image avec Trivy
+        #  Analyse de l'image avec Trivy
 
   deploy:
     name: Deploy Phase
