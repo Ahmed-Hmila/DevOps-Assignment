@@ -1,0 +1,46 @@
+name: Docker Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build Phase
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        # Récupération du code source
+
+    #  - name: Log in to DockerHub
+       # run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+        # Authentification DockerHub
+
+      - name: Build Docker Image
+        run: docker build --no-cache -t ahmedhmila/foyer_image:1.0.0 .
+        # Construction de l'image Docker
+
+      - name: Scan with Trivy
+        run: trivy image ahmedhmila/foyer_image:1.0.0
+        # Analyse de l'image avec Trivy
+
+  deploy:
+    name: Deploy Phase
+    runs-on: ubuntu-latest
+    needs: build  # La phase "deploy" dépend de la phase "build"
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        # Vérification du code source (nécessaire si docker-compose.yml est dans le dépôt)
+
+      - name: Docker Compose Down
+        run: docker-compose down -v
+        # Arrêt des conteneurs et suppression des volumes existants
+
+      - name: Docker Compose Up
+        run: docker-compose up -d
+        # Lancement des conteneurs avec Docker Compose
